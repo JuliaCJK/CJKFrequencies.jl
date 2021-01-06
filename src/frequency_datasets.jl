@@ -2,7 +2,7 @@
 #=                              Simplified LCMC                               =#
 #==============================================================================#
 
-const lcmc_categories = Dict(
+const LCMC_CATEGORIES = Dict(
     'A' => "Press: reportage",
     'B' => "Press: editorials",
     'C' => "Press: reviews",
@@ -31,17 +31,17 @@ struct SimplifiedLCMC
     function SimplifiedLCMC(cats)
         lcmc = new(Set{String}())
         for cat in cats
-            haskey(lcmc_categories, cat) && push!(lcmc.categories, cat)
+            haskey(LCMC_CATEGORIES, cat) && push!(lcmc.categories, cat)
         end
         lcmc
     end
-    SimplifiedLCMC() = new()
+    SimplifiedLCMC() = new(keys(LCMC_CATEGORIES))
 end
 
 function charfreq(lcmc::SimplifiedLCMC)
     cf = CharacterFrequency()
     for cat in lcmc.categories
-        filename = "cache/lcmc-character/LCMC_$(cat).XML"
+        filename = joinpath(artifact"lcmc", "LCMC_$(cat).XML")
         doc = parse_file(filename)
         words_from_xml(root(doc), cf)
     end
@@ -72,7 +72,7 @@ struct SimplifiedJunDa end
 function charfreq(::SimplifiedJunDa)
     cf = CharacterFrequency()
     pattern = r"^\d+\s+(\w)\s+(\d+)\s+\d+(?:\.\d+)\s+.+$"
-    for line in eachline("cache/freq.txt")
+    for line in eachline(joinpath(artifact"junda", "freq.txt"))
         m = match(pattern, line)
         m !== nothing && inc!(cf, m.captures[1], Base.parse(Int, m.captures[2]))
     end

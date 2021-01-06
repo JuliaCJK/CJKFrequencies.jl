@@ -1,0 +1,15 @@
+[junda]
+git-tree-sha1 = "08de6d8fe96f7c5a2f47486f9ab1a92f5b6e3d86"
+lazy = true
+
+    [[junda.download]]
+    sha256 = "34e2af8ae81b490fe2d3655f56b5717d1fbced1dda338cd8ecda59899ce3ecc2"
+    url = "https://github.com/tmthyln/CJKFrequencies.jl/releases/download/v0.0.1/junda.tar.gz"
+
+[lcmc]
+git-tree-sha1 = "d0102b0415592ab9e108e45b1535cfa95f5cfa5a"
+lazy = true
+
+    [[lcmc.download]]
+    sha256 = "e61c69d58f2fb8a4bbd3eff461b18433079d665ed40a01b7e6bdfc55f55091c6"
+    url = "https://github.com/tmthyln/CJKFrequencies.jl/releases/download/v0.0.1/lcmc.tar.gz"

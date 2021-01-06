@@ -4,7 +4,9 @@ A character frequency can be computed or loaded via the `charfreq` function, eit
 charfreq
 ```
 
-## Supported Predefined Character Frequency Data Sets
+## Supported Predefined Character Frequency Datasets
+A Chinese character frequency dataset's `struct`'s name will be prefixed with either `Traditional` or `Simplified` depending on whether it is based on a traditional or simplified text corpus.
+
 ```@docs
 SimplifiedLCMC
 SimplifiedJunDa

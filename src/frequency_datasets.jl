@@ -56,6 +56,15 @@ DataStructures.Accumulator{String,Int64} with 35488 entries:
   "美…  => 1
   ⋮    => ⋮
 ```
+
+## Licensing/Copyright
+This corpus is provided primarily for non-profit-making research. Be sure to see the full
+[end user license agreement](https://www.lancaster.ac.uk/fass/projects/corpus/LCMC/lcmc/lcmc_license.htm).
+
+Via the
+[Oxford Text Archive](https://ota.bodleian.ox.ac.uk/repository/xmlui/handle/20.500.12024/2474),
+this corpus is distributed under the
+[CC BY-NC-SA 3.0](http://creativecommons.org/licenses/by-nc-sa/3.0/) license.
 """
 struct SimplifiedLCMC
     categories::Set{Char}
@@ -95,7 +104,7 @@ end
 #==============================================================================#
 """
 A character frequency
-[dataset](https://lingua.mtsu.edu/chinese-computing/statistics/char/list.php?Which=MO)
+[dataset](https://lingua.mtsu.edu/chinese-computing/)
  of modern Chinese compiled by Jun Da, simplified single-character
 words only.
 
@@ -116,6 +125,11 @@ DataStructures.Accumulator{String,Int64} with 9932 entries:
   "懈… => 2893
   ⋮   => ⋮
 ```
+
+## Licensing/Copyright
+The original author maintains full copyright to the character frequency lists, but provides the
+lists for research and taeching/learning purposes only, no commercial use without permission from
+ the author. See their full disclaimer and copyright notice [here](https://lingua.mtsu.edu/chinese-computing/copyright.html).
 """
 struct SimplifiedJunDa end
 

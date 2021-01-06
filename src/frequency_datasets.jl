@@ -21,10 +21,41 @@ const LCMC_CATEGORIES = Dict(
 
 """
 A character frequency dataset: Lancaster Corpus for Mandarin Chinese, simplified terms only,
-based on simplified text corpus.
+based on simplified text corpus. See their
+[website](https://www.lancaster.ac.uk/fass/projects/corpus/LCMC/default.htm) for more details about the corpus.
 
-The character frequency can be based only on selected categories (see `lcmc_categories` for valid
- category keys and corresponding category names).
+The character frequency can be based only on selected categories (see `CJKFrequencies.LCMC_CATEGORIES` for valid
+ category keys and corresponding category names). Any incorrect categories will be ignored.
+
+## Examples
+Loading all the categories:
+```julia-repl
+julia> charfreq(SimplifiedLCMC())
+DataStructures.Accumulator{String,Int64} with 45411 entries:
+  "一路…   => 1
+  "舍得"   => 9
+  "５８"   => 1
+  "神农…   => 1
+  "十点"   => 8
+  "随从"   => 9
+  "荡心…   => 1
+  "尺码"   => 1
+  ⋮      => ⋮
+```
+Or loading just a subset (argument can be any iterable):
+```julia-repl
+julia> charfreq(SimplifiedLCMC("ABEGKLMNR"))
+DataStructures.Accumulator{String,Int64} with 35488 entries:
+  "废…  => 1
+  "蜷"  => 1
+  "哇"  => 13
+  "丰…  => 1
+  "弊…  => 3
+  "议…  => 10
+  "滴"  => 28
+  "美…  => 1
+  ⋮    => ⋮
+```
 """
 struct SimplifiedLCMC
     categories::Set{Char}
@@ -63,9 +94,28 @@ end
 #=                             Simplified Jun Da                              =#
 #==============================================================================#
 """
-A character frequency dataset: compiled by Jun Da, simplified single-character words only.
+A character frequency
+[dataset](https://lingua.mtsu.edu/chinese-computing/statistics/char/list.php?Which=MO)
+ of modern Chinese compiled by Jun Da, simplified single-character
+words only.
 
-Source: https://lingua.mtsu.edu/chinese-computing/statistics/char/list.php?Which=MO
+Currently, only the modern Chinese dataset is fetched; however, in the future, the other lists may
+also be provided as an option.
+
+## Examples
+```julia-repl
+julia> charfreq(SimplifiedJunDa())
+DataStructures.Accumulator{String,Int64} with 9932 entries:
+  "蜷… => 837
+  "哇… => 4055
+  "湓… => 62
+  "滴… => 8104
+  "堞… => 74
+  "狭… => 6901
+  "尚… => 38376
+  "懈… => 2893
+  ⋮   => ⋮
+```
 """
 struct SimplifiedJunDa end
 

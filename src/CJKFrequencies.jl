@@ -2,7 +2,7 @@ module CJKFrequencies
 
 using LightXML
 using DataStructures
-using Pkg.Artifacts
+using LazyArtifacts
 
 export CharacterFrequency, charfreq,
 

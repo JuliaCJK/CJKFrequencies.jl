@@ -1,7 +1,7 @@
 name = "CJKFrequencies"
 uuid = "3a858bc7-ae0d-44ab-8a92-ee3192d2dedf"
 authors = ["Timothy Lin <32549553+tmthyln@users.noreply.github.com>"]
-version = "0.1.1"
+version = "0.1.2"
 
 [deps]
 DataStructures = "864edb3b-99cc-5e75-8d2d-829cb0a9cfe8"

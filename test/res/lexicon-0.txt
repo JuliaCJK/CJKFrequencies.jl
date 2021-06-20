@@ -1,0 +1,7 @@
+word:tag1,tag2
+tagless:
+target:tag2
+lexicon:meta
+pencil:tag2,unique
+pen:tag2
+manytags:tag,another,more,evenmore,lots,toomany

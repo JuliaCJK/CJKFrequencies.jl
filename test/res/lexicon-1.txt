@@ -1,0 +1,4 @@
+with space:whitespace
+with,comma:symbol
+multipart,sentence with both:symbol,whitespace
+word:spaced tag

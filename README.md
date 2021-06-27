@@ -1,6 +1,6 @@
 # CJKFrequencies.jl
 ![Unit Tests](https://github.com/tmthyln/CJKFrequencies.jl/workflows/Unit%20Tests/badge.svg)
-![Documentation](https://github.com/tmthyln/CJKFrequencies.jl/workflows/Documentation/badge.svg)
+[![Documentation](https://github.com/tmthyln/CJKFrequencies.jl/workflows/Documentation/badge.svg)](https://tmthyln.github.io/CJKFrequencies.jl/latest/)
 ![Nightly Tests](https://github.com/tmthyln/CJKFrequencies.jl/workflows/Nightly%20Tests/badge.svg)
 
 A Julia package that provides some convenience functions for working with character/term frequencies of CJK language corpora (currently only implemented for specific Chinese frequency datasets, but see the docs for how to add more).

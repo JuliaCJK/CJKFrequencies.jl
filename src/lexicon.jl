@@ -25,7 +25,7 @@ function Lexicon(io::Union{IO, AbstractString})
     for line in eachline(io)
         char, tag_string = split(line, ":")
         tags = split(tag_string, ",")
-        push!(lex, char; tags)
+        push!(lex, char; tags=tags)
     end
     lex
 end

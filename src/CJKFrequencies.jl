@@ -4,7 +4,7 @@ using LightXML
 using DataStructures
 using LazyArtifacts
 
-export charfreq,
+export CJKFrequency, charfreq,
 
 SimplifiedLCMC, SimplifiedJunDa,
 

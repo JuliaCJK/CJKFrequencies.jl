@@ -85,7 +85,7 @@ struct SimplifiedLCMC
 end
 
 function charfreq(lcmc::SimplifiedLCMC)
-    cf = CharacterFrequency()
+    cf = CJKFrequency()
     for cat in lcmc.categories
         filename = joinpath(artifact"lcmc", "LCMC_$(cat).XML")
         doc = parse_file(filename)
@@ -136,13 +136,13 @@ DataStructures.Accumulator{String,Int64} with 9932 entries:
 
 ## Licensing/Copyright
 The original author maintains full copyright to the character frequency lists, but provides the
-lists for research and taeching/learning purposes only, no commercial use without permission from
+lists for research and teaching/learning purposes only, no commercial use without permission from
  the author. See their full disclaimer and copyright notice [here](https://lingua.mtsu.edu/chinese-computing/copyright.html).
 """
 struct SimplifiedJunDa end
 
 function charfreq(::SimplifiedJunDa)
-    cf = CharacterFrequency()
+    cf = CJKFrequency()
     pattern = r"^\d+\s+(\w)\s+(\d+)\s+\d+(?:\.\d+)\s+.+$"
     for line in eachline(joinpath(artifact"junda", "freq.txt"))
         m = match(pattern, line)

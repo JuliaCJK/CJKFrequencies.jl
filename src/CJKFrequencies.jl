@@ -4,11 +4,11 @@ using LightXML
 using DataStructures
 using LazyArtifacts
 
-export CharacterFrequency, charfreq,
+export charfreq,
 
 SimplifiedLCMC, SimplifiedJunDa,
 
-Lexicon, taggedwith
+Lexicon, tagged_with
 
 
 include("charfreq.jl")

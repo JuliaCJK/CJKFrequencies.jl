@@ -35,5 +35,6 @@ See the documentation for individual character frequency dataset structs for exa
 second case.
 """
 function charfreq end
-charfreq(text) = CharacterFrequency(counter(text))
+charfreq(tokens) = CharacterFrequency(counter(tokens))
+charfreq(text::AbstractString) = CharacterFrequency(counter(split(text, "")))
 

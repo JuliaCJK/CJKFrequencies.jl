@@ -51,13 +51,13 @@ function Base.push!(lex::Lexicon, words...; tags=())
     nothing
 end
 
-taggedwith(lex::Lexicon, tag) =
+tagged_with(lex::Lexicon, tag) =
     [word for (word, tags) in lex.words if tag in tags]
 
 
 """
-    coverageof(lexicon, charfreq)
-    coverageof(lexicon, text)
+    coverage(lexicon, charfreq)
+    coverage(lexicon, text)
 
 Compute a lexicon's coverage of a text (possibly via a precomputed character
 frequency dictionary). Both token and type coverage are provided.

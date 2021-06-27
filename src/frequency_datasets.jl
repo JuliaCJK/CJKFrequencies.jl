@@ -1,3 +1,4 @@
+
 #==============================================================================#
 #=                              Simplified LCMC                               =#
 #==============================================================================#
@@ -20,12 +21,14 @@ const LCMC_CATEGORIES = Dict(
     'R' => "Humour")
 
 """
+    SimplifiedLCMC([categories])
+
 A character frequency dataset: Lancaster Corpus for Mandarin Chinese, simplified terms only,
 based on simplified text corpus. See their
 [website](https://www.lancaster.ac.uk/fass/projects/corpus/LCMC/default.htm) for more details about the corpus.
 
 The character frequency can be based only on selected categories (see `CJKFrequencies.LCMC_CATEGORIES` for valid
- category keys and corresponding category names). Any incorrect categories will be ignored.
+ category keys and corresponding category names). Any invalid categories will be ignored.
 
 ## Examples
 Loading all the categories:
@@ -58,7 +61,10 @@ DataStructures.Accumulator{String,Int64} with 35488 entries:
 ```
 
 ## Licensing/Copyright
-This corpus is provided primarily for non-profit-making research. Be sure to see the full
+Note: This corpus has some conflicting licensing information, depending on who is supplying the
+data.
+
+The original corpus is provided primarily for non-profit-making research. Be sure to see the full
 [end user license agreement](https://www.lancaster.ac.uk/fass/projects/corpus/LCMC/lcmc/lcmc_license.htm).
 
 Via the
@@ -83,17 +89,17 @@ function charfreq(lcmc::SimplifiedLCMC)
     for cat in lcmc.categories
         filename = joinpath(artifact"lcmc", "LCMC_$(cat).XML")
         doc = parse_file(filename)
-        words_from_xml(root(doc), cf)
+        _words_from_xml(root(doc), cf)
     end
     cf
 end
 
-function words_from_xml(xml_elem, accum)
+function _words_from_xml(xml_elem, accum)
     for c in child_nodes(xml_elem)
         if name(c) == "w"
             inc!(accum, content(c))
         else
-            words_from_xml(c, accum)
+            _words_from_xml(c, accum)
         end
     end
 end
@@ -103,6 +109,8 @@ end
 #=                             Simplified Jun Da                              =#
 #==============================================================================#
 """
+    SimplifiedJunDa()
+
 A character frequency
 [dataset](https://lingua.mtsu.edu/chinese-computing/)
  of modern Chinese compiled by Jun Da, simplified single-character

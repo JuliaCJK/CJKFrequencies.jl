@@ -7,10 +7,10 @@
             @test elem in lex
         end
         for elem in ["word", "target", "pencil", "pen"]
-            @test elem in taggedwith(lex, "tag2")
+            @test elem in tagged_with(lex, "tag2")
         end
         for  elem in ["tagless", "lexicon", "manytags"]
-            @test !(elem in taggedwith(lex, "tag2"))
+            @test !(elem in tagged_with(lex, "tag2"))
         end
         for tag in ["tag1", "tag2", "meta", "unique", "tag", "another", "more", "evenmore", "lots",
         "toomany"]

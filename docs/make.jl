@@ -4,10 +4,7 @@ using Documenter, CJKFrequencies
 
 makedocs(
     sitename="CJKFrequencies.jl Documentation",
-    format=Documenter.HTML(
-        prettyurls=get(ENV, "CI", nothing) == "true"
-    ),
-    modules=[CJKFrequencies],
+    #modules=[CJKFrequencies],
     pages=[
         "Home" => "index.md",
         "API Reference" => "api_reference.md",
@@ -15,8 +12,10 @@ makedocs(
     ]
 )
 
-deploydocs(
-    repo = "github.com/tmthyln/CJKFrequencies.jl.git",
-    devbranch = "main",
-    devurl="latest"
+if get(ENV, "CI", nothing) == "true"
+    deploydocs(
+        repo = "github.com/JuliaCJK/CJKFrequencies.jl.git",
+        devbranch = "main",
+        devurl="latest",
     )
+end

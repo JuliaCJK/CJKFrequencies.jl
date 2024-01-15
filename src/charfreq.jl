@@ -1,10 +1,11 @@
 
 """
-Accumulator-like data structure for storing frequencies of CJK words (although other tokens
-can be stored as well).
+Accumulator-like data structure for storing frequencies of CJK words 
+(although other tokens can be stored as well). 
+This is usually like the type `Accumulator{String, Int}`.
 
-You generally don't need to explicitly call this struct's constructor yourself; rather, use
-the `charfreq` function.
+You generally don't need to explicitly call this struct's constructor yourself; 
+rather, use the `charfreq` function.
 """
 struct CJKFrequency{S <: AbstractString, C <: Number}
     freq::Accumulator{S, C}

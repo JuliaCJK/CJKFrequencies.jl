@@ -5,5 +5,6 @@ Note that while the source code for this package is MIT-licensed, some of the ch
 
 ## Contents
 
-- [API Reference](./api_reference.md)
+- [Frequency Lists](./api/freqlist.md)
+- [Lexicons](./api/lexicon.md)
 - [Developer Docs](./devdocs.md)

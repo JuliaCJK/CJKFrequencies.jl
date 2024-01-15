@@ -51,6 +51,11 @@ function Base.push!(lex::Lexicon, words...; tags=())
     nothing
 end
 
+"""
+    tagged_with(lexicon, tag)
+
+The set of words or characters in a lexicon tagged with `tag`.
+"""
 tagged_with(lex::Lexicon, tag) =
     [word for (word, tags) in lex.words if tag in tags]
 
@@ -58,10 +63,28 @@ tagged_with(lex::Lexicon, tag) =
 """
     coverage(lexicon, charfreq)
     coverage(lexicon, text)
+    coverage([lexicon,] charfreq1, charfreq2)
 
-Compute a lexicon's coverage of a text (possibly via a precomputed character
-frequency dictionary). Both token and type coverage are provided.
+Compute a "coverage" metric.
+
+Between a lexicon of known words and a character frequency list, compute the
+coverage of the lexicon among characters in the character frequency list. Provide
+both token and type coverage:
+* token coverage counts each token separately (considering repeated characters)
+* type coverage counts each unique token once
+
+Between a lexicon of known words and a string of text, compute the coverage of
+the lexicon among characters in the text. Also provide both token and type coverage.
+
+Between 2 character frequency lists, compute the mutual coverages between the lists
+(optionally filtering using a provided lexicon). You can interpret these mutual
+coverage values as the (weighted) amount of overlap between the character frequencies
+(Jaccard similarity, or intersection-over-union).
+The lower the coverage, the higher the "switching cost" in terms of vocabulary.
+
 """
+function coverage end
+
 function coverage(lex::Lexicon, cf::Accumulator)
     known_tokens, total_tokens, known_types, total_types = 0, 0, 0, length(lex)
     for (char, freq) in cf

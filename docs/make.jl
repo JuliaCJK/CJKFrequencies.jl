@@ -4,12 +4,15 @@ using Documenter, CJKFrequencies
 
 makedocs(
     sitename="CJKFrequencies.jl Documentation",
-    #modules=[CJKFrequencies],
+    modules=[CJKFrequencies],
     pages=[
         "Home" => "index.md",
-        "API Reference" => "api_reference.md",
-        "Developer Docs" => "devdocs.md"
-    ]
+        "API Reference" => [
+            "Frequency Lists" => "api/freqlist.md",
+            "Lexicons" => "api/lexicon.md",
+        ],
+        "Developer Docs" => "devdocs.md",
+    ],
 )
 
 if get(ENV, "CI", nothing) == "true"

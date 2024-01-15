@@ -1,10 +1,18 @@
+[huang-tsai]
+git-tree-sha1 = "6aa63ede1d36ec603c054bd3efc24a0a3aa209db"
+lazy = true
+
+    [[huang-tsai.download]]
+    sha256 = "b0478f1db80c48d39beb8109713cc7f8daa286d444b96841eb333996527cd8ae"
+    url = "https://github.com/JuliaCJK/CJKFrequencies.jl/releases/download/v0.2.0/huang-tsai.tar.gz"
+
 [junda]
-git-tree-sha1 = "08de6d8fe96f7c5a2f47486f9ab1a92f5b6e3d86"
+git-tree-sha1 = "52bd2e997c7338cdb40014ae274cf846a03470e0"
 lazy = true
 
     [[junda.download]]
-    sha256 = "34e2af8ae81b490fe2d3655f56b5717d1fbced1dda338cd8ecda59899ce3ecc2"
-    url = "https://github.com/tmthyln/CJKFrequencies.jl/releases/download/v0.0.1/junda.tar.gz"
+    sha256 = "0fc234d59d363de95f997e6b4e1f09f7f7d26d6dd97831de16395739c52f3fb7"
+    url = "https://github.com/JuliaCJK/CJKFrequencies.jl/releases/download/v0.2.0/junda.tar.gz"
 
 [lcmc]
 git-tree-sha1 = "d0102b0415592ab9e108e45b1535cfa95f5cfa5a"
@@ -13,3 +21,19 @@ lazy = true
     [[lcmc.download]]
     sha256 = "e61c69d58f2fb8a4bbd3eff461b18433079d665ed40a01b7e6bdfc55f55091c6"
     url = "https://github.com/tmthyln/CJKFrequencies.jl/releases/download/v0.0.1/lcmc.tar.gz"
+
+[leiden-weibo]
+git-tree-sha1 = "4bd41695241371b96f89878298992bcd7c921908"
+lazy = true
+
+    [[leiden-weibo.download]]
+    sha256 = "8e6a0313016ed9cf0c300af5decdb304ef37779ca05baaa34b149b6b8a2131ce"
+    url = "https://github.com/JuliaCJK/CJKFrequencies.jl/releases/download/v0.2.0/leiden-weibo.tar.gz"
+
+[subtlex-ch]
+git-tree-sha1 = "8a534a01a42f789692393241f0426498a4d5287c"
+lazy = true
+
+    [[subtlex-ch.download]]
+    sha256 = "c5fd9641ff68e417b84e05f96f5c6cdb27b67eee74e644381728be472100c58a"
+    url = "https://github.com/JuliaCJK/CJKFrequencies.jl/releases/download/v0.2.0/subtlex-ch.tar.gz"

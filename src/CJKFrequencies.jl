@@ -6,7 +6,11 @@ using LazyArtifacts
 
 export CJKFrequency, charfreq,
 
-SimplifiedLCMC, SimplifiedJunDa,
+SimplifiedLCMC, 
+SimplifiedJunDa,
+TraditionalHuangTsai,
+SimplifiedLeidenWeibo,
+SimplifiedSUBTLEX,
 
 Lexicon, tagged_with
 

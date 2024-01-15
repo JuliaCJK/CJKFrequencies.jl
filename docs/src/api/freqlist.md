@@ -35,3 +35,7 @@ Common operations on `CJKFrequency`:
 - and most typical "iterable" or "indexable" functions.
 
 Both `length` and `size` are defined: the length of a frequency list is the number of terms in the frequency list, whereas the size is the total count of all tokens.
+
+```@docs
+CJKFrequencies.entropy
+```

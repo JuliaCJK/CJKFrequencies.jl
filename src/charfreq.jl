@@ -83,3 +83,19 @@ function charfreq end
 charfreq(tokens) = CJKFrequency(counter(tokens))
 charfreq(text::AbstractString) = CJKFrequency(counter(split(text, "")))
 
+"""
+    entropy(charfreq)
+
+Compute the information theoretic entropy for a character frequency,
+defined as
+
+\$-\\sum_{(c, v)\\in CF} \\frac{v}{s}\\log_2\\left( \\frac{v}{s} \\right), \\quad s=\\sum_{(c, v) \\in CF} v\$
+
+where \$c\$ is the character and \$v\$ is the count for that value.
+"""
+entropy(cf::CJKFrequency) = -sum(values(cf.freq)) do count
+    prob = count / cf.size[]
+    prob * log2(prob)
+end
+
+

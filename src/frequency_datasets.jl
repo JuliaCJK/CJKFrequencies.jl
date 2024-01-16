@@ -20,7 +20,8 @@ const LCMC_CATEGORIES = Dict(
     'M' => "Science fiction",
     'N' => "Adventure and martial arts fiction",
     'P' => "Romantic fiction",
-    'R' => "Humour")
+    'R' => "Humour",
+)
 
 """
     SimplifiedLCMC([categories])

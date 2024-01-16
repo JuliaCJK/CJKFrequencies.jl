@@ -39,11 +39,20 @@ Differences between coverage and mutual information metrics:
 
 A middle ground between mutual information and coverage is a symmetric "intersection-over-union" coverage:
 
-```@example
+```@example infothe
 using CJKFrequencies # hide
+using CJKFrequencies: coverage, mutual_information # hide
 
 set1 = CJKFrequency("a" => 5, "b" => 11, "c" => 3)
 set2 = CJKFrequency("b" => 2, "c" => 4, "d" => 4)
 
 size(set1 ∩ set2) / size(set1 ∪ set2)
+```
+
+```@example infothe
+coverage(set1, set2)
+```
+
+```@example infothe
+mutual_information(set1, set2)
 ```

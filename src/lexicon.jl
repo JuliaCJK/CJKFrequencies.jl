@@ -40,7 +40,10 @@ Base.print(io::IO, lex::Lexicon) =
 
 function Base.push!(lex::Lexicon, words...; tags=())
     for word in words
-        haskey(lex.words, word) || (lex.words[word] = Set{String}())
+        if !haskey(lex.words, word)
+            lex.words[word] = Set{String}()
+        end
+
         for tag in tags
             push!(lex.words[word], tag)
         end
@@ -61,32 +64,51 @@ tagged_with(lex::Lexicon, tag) =
 
 
 """
-    coverage(lexicon, charfreq)
-    coverage(lexicon, text)
-    coverage([lexicon,] charfreq1, charfreq2)
+    coverage([filter,] coverer, covered)
 
-Compute a "coverage" metric.
+Compute an "intersection-over-latter" coverage metric.
 
-Between a lexicon of known words and a character frequency list, compute the
-coverage of the lexicon among characters in the character frequency list. Provide
-both token and type coverage:
-* token coverage counts each token separately (considering repeated characters)
-* type coverage counts each unique token once
+The coverage of a lexicon of known words over a character frequency list is 
+the ratio of tokens or types in the frequency list which are also present in the lexicon.
+There are two varieties:
 
-Between a lexicon of known words and a string of text, compute the coverage of
-the lexicon among characters in the text. Also provide both token and type coverage.
+- token coverage counts each token separately (considering repeated characters)
+- type coverage counts each unique token once
 
-Between 2 character frequency lists, compute the mutual coverages between the lists
-(optionally filtering using a provided lexicon). You can interpret these mutual
-coverage values as the (weighted) amount of overlap between the character frequencies
-(Jaccard similarity, or intersection-over-union).
+Suppose the lexicon contains all the words you know 
+and the frequency list represents words extracted from a text you wish to read.
+The token coverage represents how much of the text you are expected to know (by character),
+and the type coverage represents how much of the vocabulary you are.
 The lower the coverage, the higher the "switching cost" in terms of vocabulary.
+
+Coverage can be computed between 
+- lexicon over a frequency list
+- lexicon over text (represented as a frequency list)
+- frequency list over another frequency list
+by both tokens and types.
+
+## Parameters
+
+The first parameter must be a *covering type*, i.e. one of `Accumulator`, `CJKFrequency`, or `Lexicon`.
+The second parameter must be a *coverable type*, i.e. either `Accumulator` or `CJKFrequency`.
+Anything else must be convertible to `CJKFrequency` via the `charfreq` function.
+
+If three arguments are provided, the first argument acts as a context filter.
+This must be a covering type.
+For example, if the arguments are a lexicon, frequency list, and some text (in that order),
+the coverage of the frequency list over the text will be computed,
+ignoring any characters in the text that do not appear in the lexicon.
+
+## Examples
 
 """
 function coverage end
 
-function coverage(lex::Lexicon, cf::Accumulator)
-    known_tokens, total_tokens, known_types, total_types = 0, 0, 0, length(lex)
+const CoveringType = Union{Accumulator, CJKFrequency, Lexicon}
+const CoverableType = Union{Accumulator, CJKFrequency}
+
+function coverage(lex::CoveringType, cf::CoverableType)
+    known_tokens, total_tokens, known_types, total_types = 0, 0, 0, 0
     for (char, freq) in cf
         if char in lex
             known_tokens += freq
@@ -95,7 +117,50 @@ function coverage(lex::Lexicon, cf::Accumulator)
         total_tokens += freq
         total_types += 1
     end
-    (char_coverage=Float(known_tokens)/total_tokens, type_coverage=Float(known_types)/total_types)
+    (token_coverage=Float(known_tokens)/total_tokens, type_coverage=Float(known_types)/total_types)
 end
-coverage(lex::Lexicon, text) = coverage(charfreq(text), lex)
+coverage(ct::CoveringType, text) = coverage(ct, charfreq(text))
+coverage(text, ct::CoverableType) = coverage(charfreq(text), ct)
+coverage(text1, text2) = coverage(charfreq(text1), charfreq(text2))
 
+function coverage(lex::CoveringType, cf1::CoveringType, cf2::CoverableType)
+    known_tokens, total_tokens, known_types, total_types = 0, 0, 0, 0
+    for (char, freq) in cf2
+        if char ∈ lex
+            if char in cf1
+                known_tokens += freq
+                known_types += 1
+            end
+            total_tokens += freq
+            total_types += 1
+        end
+    end
+    (token_coverage=Float(known_tokens)/total_tokens, type_coverage=Float(known_types)/total_types)
+end
+coverage(lex::CoveringType, ct::CoveringType, text) = coverage(lex, ct, charfreq(text))
+coverage(lex::CoveringType, text, ct::CoverableType) = coverage(lex, charfreq(text), ct)
+coverage(lex::CoveringType, text1, text2) = coverage(lex, charfreq(text1), charfreq(text2))
+coverage(text0, text1, text2) = coverage(charfreq(text0), charfreq(text1), charfreq(text2))
+
+
+"""
+    mutual_information(charfreq1, charfreq2)
+
+Compute the mutual information between two frequency lists.
+
+!!! warning "Subject to refinement"
+
+    Because there's not a good source of information for the joint PMF,
+    this function currently approximates it using the average of the two marginal PMFs.
+"""
+function mutual_information end
+
+function mutual_information(cf1::CoverableType, cf2::CoverableType)
+    sum(keys(cf1) ∩ keys(cf2)) do char
+        prob_1 = cf1[char] / cf1.size[]
+        prob_2 = cf2[char] / cf2.size[]
+        joint = (prob_1 + prob_2) / 2
+        joint * log2(joint / prob_1 / prob_2)
+    end
+end
+mutual_information(cf1, cf2) = mutual_information(charfreq(cf1), charfreq(cf2))

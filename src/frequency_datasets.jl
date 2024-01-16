@@ -26,12 +26,14 @@ const LCMC_CATEGORIES = Dict(
 """
     SimplifiedLCMC([categories])
 
-A character frequency dataset: Lancaster Corpus for Mandarin Chinese, simplified terms only,
+A word frequency dataset: Lancaster Corpus for Mandarin Chinese, simplified terms only,
 based on simplified text corpus. See their
-[website](https://www.lancaster.ac.uk/fass/projects/corpus/LCMC/default.htm) for more details about the corpus.
+[website](https://www.lancaster.ac.uk/fass/projects/corpus/LCMC/default.htm) 
+for more details about the corpus.
 
-The character frequency can be based only on selected categories (see `CJKFrequencies.LCMC_CATEGORIES` for valid
- category keys and corresponding category names). Any invalid categories will be ignored.
+The word frequency can be based only on selected categories 
+(see `CJKFrequencies.LCMC_CATEGORIES` for valid category keys and corresponding category names). 
+Any invalid categories will be ignored.
 
 ## Examples
 Loading all the categories:

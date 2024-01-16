@@ -6,4 +6,5 @@ using Test
     include("charfreq_tests.jl")
     include("freq_datasets_tests.jl")
     include("lexicon_tests.jl")
+    include("coverage_tests.jl")
 end

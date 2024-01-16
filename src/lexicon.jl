@@ -110,14 +110,14 @@ const CoverableType = Union{Accumulator, CJKFrequency}
 function coverage(lex::CoveringType, cf::CoverableType)
     known_tokens, total_tokens, known_types, total_types = 0, 0, 0, 0
     for (char, freq) in cf
-        if char in lex
+        if char in keys(lex)
             known_tokens += freq
             known_types += 1
         end
         total_tokens += freq
         total_types += 1
     end
-    (token_coverage=Float(known_tokens)/total_tokens, type_coverage=Float(known_types)/total_types)
+    (token_coverage=float(known_tokens)/total_tokens, type_coverage=float(known_types)/total_types)
 end
 coverage(ct::CoveringType, text) = coverage(ct, charfreq(text))
 coverage(text, ct::CoverableType) = coverage(charfreq(text), ct)
@@ -126,8 +126,8 @@ coverage(text1, text2) = coverage(charfreq(text1), charfreq(text2))
 function coverage(lex::CoveringType, cf1::CoveringType, cf2::CoverableType)
     known_tokens, total_tokens, known_types, total_types = 0, 0, 0, 0
     for (char, freq) in cf2
-        if char ∈ lex
-            if char in cf1
+        if char in keys(lex)
+            if char in keys(cf1)
                 known_tokens += freq
                 known_types += 1
             end
@@ -146,7 +146,7 @@ coverage(text0, text1, text2) = coverage(charfreq(text0), charfreq(text1), charf
 """
     mutual_information(charfreq1, charfreq2)
 
-Compute the mutual information between two frequency lists.
+Compute the mutual information between two frequency lists, in bits.
 
 !!! warning "Subject to refinement"
 

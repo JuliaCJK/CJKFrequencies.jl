@@ -18,3 +18,11 @@ end
     @test length(cf) == 3
     @test size(cf) == length(tokens)
 end
+
+@testset "intersections between char freqs" begin
+    cf = CJKFrequency("a" => 1, "b" => 2) ∩ CJKFrequency("a" => 5, "b" => 2, "c" => 12)
+
+    @test cf["a"] == 1
+    @test cf["b"] == 2
+    @test "c" ∉ keys(cf)
+end

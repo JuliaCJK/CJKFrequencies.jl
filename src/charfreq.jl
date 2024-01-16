@@ -10,12 +10,18 @@ rather, use the `charfreq` function.
 struct CJKFrequency{S <: AbstractString, C <: Number}
     freq::Accumulator{S, C}
     size::Ref{C}
-    function CJKFrequency(frequencies=Dict{String, Int}())
-        key_type = eltype(keys(frequencies))
-        val_type = eltype(values(frequencies))
-        new{key_type, val_type}(counter(frequencies), Ref(sum(values(frequencies))))
+    
+    function CJKFrequency{S, C}(freq::Accumulator{S, C}) where {S <: AbstractString, C <: Number}
+        new(freq, Ref(sum(values(freq))))
     end
 end
+
+function CJKFrequency(frequencies=Dict{String, Int}())
+    key_type = eltype(keys(frequencies))
+    val_type = eltype(values(frequencies))
+    CJKFrequency{key_type, val_type}(counter(frequencies))
+end
+CJKFrequency(pairs...) = CJKFrequency(Dict(pairs))
 
 # mutation
 function DataStructures.inc!(cf::CJKFrequency, key, count=1)
@@ -51,12 +57,40 @@ Base.values(cf::CJKFrequency) = values(cf.freq)
 Base.getindex(cf::CJKFrequency, i) = getindex(cf.freq, i)
 Base.firstindex(cf::CJKFrequency) = firstindex(cf.freq)
 Base.lastindex(cf::CJKFrequency) = lastindex(cf.freq)
+function Base.setindex!(cf::CJKFrequency, value, key)
+    cf.freq[key] = value
+    cf
+end
 
 # iteration
 Base.iterate(cf::CJKFrequency) = iterate(cf.freq)
 Base.iterate(cf::CJKFrequency, state) = iterate(cf.freq, state)
 Base.length(cf::CJKFrequency) = length(cf.freq)
 Base.size(cf::CJKFrequency) = cf.size[]
+
+Base.copy(cf::CJKFrequency{S, C}) where {S, C} = CJKFrequency{S, C}(copy(cf.freq))
+
+# set operations
+function Base.intersect(cf::CJKFrequency, cfs::Vararg{CJKFrequency})
+    out = CJKFrequency(Dict([char => cf[char] for char in intersect(keys(cf), map(keys, cfs)...)]))
+    for list in cfs
+        for (char, freq) in list
+            if char in keys(out)
+                out[char] = min(out[char], freq)
+            end
+        end
+    end
+    out
+end
+function Base.union(cf::CJKFrequency, cfs::Vararg{CJKFrequency})
+    out = CJKFrequency(Dict([char => cf[char] for char in union(keys(cf), map(keys, cfs)...)]))
+    for list in cfs
+        for (char, freq) in list
+            out[char] = max(out[char], freq)
+        end
+    end
+    out
+end
 
 """
     charfreq(text)
@@ -82,6 +116,7 @@ second case.
 function charfreq end
 charfreq(tokens) = CJKFrequency(counter(tokens))
 charfreq(text::AbstractString) = CJKFrequency(counter(split(text, "")))
+charfreq(cf::CJKFrequency) = cf
 
 """
     entropy(charfreq)
